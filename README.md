@@ -1,38 +1,39 @@
-# 俄罗斯方块排行榜（Arc Testnet）
+# Tetris Leaderboard on Arc Testnet
 
-一个基于 **Arc Testnet** 的俄罗斯方块游戏排行榜 dApp，支持钱包连接、签名提交分数和实时排行榜显示。
+A simple yet fun Web3 Tetris leaderboard dApp built on **Arc Testnet**, featuring wallet connection, anti-cheat signature verification, and real-time ranking.
 
-## 项目特点
+![HTML](https://img.shields.io/badge/HTML-100%25-orange)
+![Solidity](https://img.shields.io/badge/Solidity-0.8.24-363636)
+![Arc Testnet](https://img.shields.io/badge/Arc%20Testnet-Active-00D4FF)
 
-- 部署在 **Arc Testnet**（Circle 推出的 USDC 原生 L1 链）
-- 使用 Solidity 智能合约实现防作弊排行榜（带 ECDSA 签名验证）
-- 前端使用纯 HTML + ethers.js 实现
-- 支持 MetaMask 钱包连接与签名提交分数
-- 简单易部署，适合学习 Web3 游戏开发
+## ✨ Features
 
-## 快速体验
+- Connect with **MetaMask** wallet
+- Submit scores with **ECDSA signature verification** (anti-cheat protection)
+- Real-time **Top 20 Leaderboard**
+- Fully deployed on **Arc Testnet** (USDC as native gas token)
+- Lightweight frontend (pure HTML + ethers.js)
 
-1. 打开以下链接（推荐用 Chrome + MetaMask）：
-   [tetris-arc.html](tetris-arc.html)
+## 🚀 Quick Start
 
-2. 点击 **“连接 MetaMask 钱包”**
-3. 切换到 **Arc Testnet** 网络
-4. 玩俄罗斯方块后提交你的最高分！
+1. Open the [demo page](tetris-arc.html)
+2. Click **"Connect MetaMask Wallet"**
+3. Switch network to **Arc Testnet**
+4. Play Tetris and submit your high score!
 
-## 合约信息
+## 📜 Contract Information
 
-- **合约地址**： `0x00839dcfe60Dc09037D4C31A12BbcD9617CFaafA`
-- **网络**： Arc Testnet (Chain ID: 5042002)
-- **区块浏览器**： [https://testnet.arcscan.app](https://testnet.arcscan.app)
+- **Contract Address**: `0x00839dcfe60Dc09037D4C31A12BbcD9617CFaafA`
+- **Network**: Arc Testnet (Chain ID: 5042002)
+- **Explorer**: [https://testnet.arcscan.app](https://testnet.arcscan.app)
 
-## 项目文件
+## 📁 Project Files
 
-- `tetris-arc.html` —— 主页面（包含连接钱包、提交分数、排行榜）
-- `TetrisLeaderboard.sol` —— 智能合约源码（带防刷分签名验证）
+- `tetris-arc.html` — Main frontend (wallet connection, score submission, leaderboard)
+- `TetrisLeaderboard.sol` — Solidity smart contract with anti-cheat mechanism
 
-## 如何本地运行
+## 🛠️ How to Run Locally
 
-1. 把 `tetris-arc.html` 下载到本地
-2. 使用本地服务器打开（推荐）：
-   ```bash
-   python -m http.server 8000
+```bash
+# Run in the project directory
+python -m http.server 8000
