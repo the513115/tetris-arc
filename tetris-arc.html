@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>俄罗斯方块 - Arc Testnet</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.0/dist/ethers.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin: 40px; background: #f4f7fa; }
+    .alert { padding: 15px; margin: 20px auto; max-width: 600px; border-radius: 8px; background: #fff3cd; color: #856404; }
+    button { padding: 14px 28px; font-size: 17px; margin: 15px; }
+    #status { margin: 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>俄罗斯方块排行榜（Arc Testnet）</h1>
+
+  <div id="installAlert" class="alert" style="display: none;">
+    <strong>请先安装 MetaMask 小狐狸钱包</strong><br>
+    <a href="https://metamask.io/download/" target="_blank">点击这里下载安装 MetaMask</a>
+  </div>
+
+  <button id="connectBtn">连接 MetaMask 钱包</button>
+  <div id="address"></div>
+  <div id="status"></div>
+
+  <script>
+    const CONTRACT_ADDRESS = "0x00839dcfe60Dc09037D4C31A12BbcD9617CFaafA";
+
+    let signer, userAddress;
+
+    async function connectWallet() {
+      const alertBox = document.getElementById("installAlert");
+      
+      if (typeof window.ethereum === "undefined") {
+        alertBox.style.display = "block";
+        document.getElementById("status").innerHTML = "❌ 未检测到 MetaMask";
+        return;
+      }
+
+      alertBox.style.display = "none";
+
+      try {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const accounts = await window.ethereum.request({ 
+          method: "eth_requestAccounts" 
+        });
+
+        userAddress = accounts[0];
+        signer = await provider.getSigner();
+
+        document.getElementById("address").innerHTML = 
+          `已连接: <strong>${userAddress.slice(0,8)}...${userAddress.slice(-6)}</strong>`;
+        
+        document.getElementById("connectBtn").innerText = "✅ 已连接钱包";
+        document.getElementById("status").innerHTML = "✅ 连接成功！现在可以测试提交分数";
+
+        // 尝试切换到 Arc Testnet
+        await switchNetwork();
+      } catch (error) {
+        console.error(error);
+        document.getElementById("status").innerHTML = "❌ 连接失败：" + error.message;
+      }
+    }
+
+    async function switchNetwork() {
+      try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x4cef52' }]
+        });
+      } catch (err) {
+        if (err.code === 4902) {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [{
+              chainId: '0x4cef52',
+              chainName: 'Arc Testnet',
+              rpcUrls: ['https://rpc.testnet.arc.network'],
+              nativeCurrency: { name: 'USDC', symbol: 'USDC', decimals: 6 },
+              blockExplorerUrls: ['https://testnet.arcscan.app']
+            }]
+          });
+        }
+      }
+    }
+
+    // 绑定按钮
+    document.getElementById("connectBtn").addEventListener("click", connectWallet);
+  </script>
+</body>
+</html>
